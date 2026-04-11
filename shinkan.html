@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ソフトボールサークル 新歓</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+      background: #fafafa;
+      color: #111;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #1a4f8a;
+      color: #fff;
+      padding: 40px 24px 32px;
+      text-align: center;
+    }
+    header h1 { font-size: 2rem; font-weight: 700; letter-spacing: 0.05em; }
+    header p { margin-top: 6px; font-size: 1rem; opacity: 0.85; }
+
+    nav {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: center;
+    }
+    nav button {
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 14px 32px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: #333;
+      cursor: pointer;
+    }
+    nav button.active, nav button:hover {
+      color: #1a4f8a;
+      border-bottom-color: #1a4f8a;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    main {
+      max-width: 640px;
+      margin: 48px auto;
+      padding: 0 24px 64px;
+    }
+
+    section { margin-bottom: 40px; }
+    section h2 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #1a4f8a;
+      border-bottom: 2px solid #1a4f8a;
+      padding-bottom: 6px;
+      margin-bottom: 18px;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+    tr { border-bottom: 1px solid #eee; }
+    td { padding: 12px 8px; font-size: 0.97rem; vertical-align: top; }
+    td:first-child { color: #666; width: 36%; font-size: 0.88rem; }
+
+    .items { list-style: none; padding: 0; }
+    .items li { padding: 10px 0; border-bottom: 1px solid #eee; font-size: 0.97rem; }
+    .items li::before { content: "・"; color: #1a4f8a; }
+
+    .map-wrapper {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .map-wrapper iframe {
+      display: block;
+      width: 100%;
+      height: 300px;
+    }
+    .map-note {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: #888;
+    }
+
+    .steps { list-style: none; padding: 0; counter-reset: step; }
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 0.97rem;
+    }
+    .steps li::before {
+      content: counter(step);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #1a4f8a;
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .steps .sub {
+      display: block;
+      font-size: 0.84rem;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .contact-box {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 20px 24px;
+    }
+    .contact-box p { font-size: 0.95rem; margin-bottom: 10px; }
+    .contact-box p:last-child { margin-bottom: 0; }
+    .label { display: inline-block; font-size: 0.8rem; color: #666; width: 80px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>⚾ソフトボールサークルオーガスト</h1>
+  <p>新歓特設ページ</p>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('info', this)">新歓情報</button>
+  <button onclick="showTab('join', this)">入会方法</button>
+</nav>
+
+<!-- ===== サークル情報 ===== -->
+<div id="tab-info" class="tab-content active">
+  <main>
+　　<section>
+      <h2>課外活動ガイダンスでの説明会について</h2>
+      <table>
+        <tr><td>日付</td><td>4/12　11:00～13:00 及び 14:30～16:30</td></tr>
+        <tr><td>場所</td><td>東京理科大学　神楽坂キャンパス2号館3階231教室</td></tr>
+      </table>
+       <p>◎活動について口頭・対面で説明する唯一の機会です！ぜひお越しください！</p>
+    </section>
+    <section>
+      <h2>新歓活動について</h2>
+      <table>
+        <tr><td>活動日</td><td>4/19（日）　4/26（日）</td></tr>
+        <tr><td>活動時間</td><td>15:00 〜 18:00　（※途中参加・退出OK）</td></tr>
+        <tr><td>活動場所</td><td>小松川グラウンド6面</td></tr>
+      </table>
+    </section>
+
+    <section>
+      <h2>アクセス</h2>
+      <div class="map-wrapper">
+        <!--
+          【地図の変更方法】
+          1. Google マップ (maps.google.com) で目的地を開く
+          2. 「共有」→「地図を埋め込む」→ iframe コードをコピー
+          3. 下の <iframe> タグを丸ごと置き換える
+        -->
+        
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.753476809789!2d139.84808067430802!3d35.70768367257876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x601889869c4347db%3A0x1a702c728240035c!2z5bCP5p2-5bed44Kw44Op44Km44Oz44OJ77yW6Z2i!5e0!3m2!1sja!2sjp!4v1775890177779!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        
+      </div>
+      <p class="map-note">※ 地図は目安です。詳細はお問い合わせください。</p>
+    </section>
+
+    <section>
+      <h2>持ち物</h2>
+      <ul class="items">
+        <li>運動できる服装・シューズ</li>
+        <li>グローブ（お持ちの方）</li>
+        <li>飲み物</li>
+      </ul>
+      <p style="margin-top:14px; font-size:0.85rem; color:#666;">
+        ※ バットやボールはサークルで用意します。グローブは貸出があるのでなくても大丈夫です。
+      </p>
+    </section>
+ <section>
+      <h2>お問い合わせ</h2>
+      <div class="contact-box">
+        <p><span class="label">代表者</span>吉田 諭人</p>
+        <p><span class="label">メール</span>1624115@ed.tus.ac.jp</p>
+        <p><span class="label">公式Instagram</span><a href="https://www.instagram.com/tus_ogast?igsh=MWQ5bjlzOXl2ZThjcA%3D%3D&utm_source=qr" target="_blank" rel="@tus_ogast">@tus_ogast</a></p>
+      </div>
+      <p style="margin-top:12px; font-size:0.84rem; color:#666;">
+        ※ 不明な点はお気軽にご連絡ください。
+      </p>
+    </section>
+  </main>
+</div>
+
+<!-- ===== 入会手続き ===== -->
+<div id="tab-join" class="tab-content">
+  <main>
+
+    <section>
+      <h2>入会の流れ</h2>
+      <ol class="steps">
+        <li>
+          <div>
+            まず練習を見学・体験する
+            <span class="sub">事前連絡なしでも参加できます。活動日にグラウンドへお越しください。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            公式LINEを追加し、リッチメニューから「新規入会」をクリックする。
+            <span class="sub">クリックすると説明とリンクが送られてきます</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            リンクから入会用フォームにアクセスして必要事項を入力する
+            <span class="sub">氏名・学年・連絡先などを入力していただきます。</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            サークル費を振り込む
+            <span class="sub">サークル費として3,000円を公式アカウントから送られてくる口座に入金します</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            LINEグループに参加して完了！
+            <span class="sub">フォームへの回答とサークル費の振り込みが確認でき次第、グループへの招待リンクが送信されます。</span>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>お問い合わせ</h2>
+      <div class="contact-box">
+        <p><span class="label">代表者</span>吉田 諭人</p>
+        <p><span class="label">メール</span>1624115@ed.tus.ac.jp</p>
+        <p><span class="label">公式Instagram</span><a href="https://www.instagram.com/tus_ogast?igsh=MWQ5bjlzOXl2ZThjcA%3D%3D&utm_source=qr" target="_blank" rel="@tus_ogast">@tus_ogast</a></p>
+      </div>
+      <p style="margin-top:12px; font-size:0.84rem; color:#666;">
+        ※ 不明な点はお気軽にご連絡ください。
+      </p>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  function showTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
